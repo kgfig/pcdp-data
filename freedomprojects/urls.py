@@ -6,6 +6,6 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'freedomprojects.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'/pcdpdata/', include(pcdpdata_urls, namespace='pcdpdata')),
+    url(r'^pcdpdata/', include(pcdpdata_urls, namespace='pcdpdata')),
     # url(r'^admin/', include(admin.site.urls)),
 ]
