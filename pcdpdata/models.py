@@ -8,7 +8,7 @@ class Project(models.Model):
 
 class Assessment(models.Model):
     title = models.CharField(max_length=64)
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True)
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True, related_name='assesment')
     original_id = models.IntegerField()
     type = models.IntegerField()
 
@@ -16,7 +16,7 @@ class Assessment(models.Model):
         return self.title
 
 class Question(models.Model):
-    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='questions')
     content = models.TextField()
     original_id = models.IntegerField()
     seq_num = models.IntegerField()
@@ -27,7 +27,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     content = models.TextField()
     original_id = models.IntegerField()
     letter = models.CharField(max_length=1)
