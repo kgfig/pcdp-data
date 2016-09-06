@@ -11,7 +11,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Question
-        fields = ('content', 'points', 'choices')
+        fields = ('id', 'content', 'points', 'choices')
         depth = 1
 
 class AssessmentSerializer(serializers.ModelSerializer):
@@ -19,13 +19,13 @@ class AssessmentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Assessment
-        fields = ('title', 'type', 'questions')
+        fields = ('id', 'title', 'type', 'questions')
         depth = 1
 
-class User(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     answers = ChoiceSerializer(many=True, read_only=True)
     
     class Meta:
         model = User
-        fields = ('surname', 'firstname', 'username', 'email', 'answers')
+        fields = ('id', 'surname', 'firstname', 'username', 'email', 'answers')
         depth = 1

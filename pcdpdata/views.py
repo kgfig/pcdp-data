@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # App code
-from .models import Assessment
-from .serializers import AssessmentSerializer
+from .models import Assessment, Choice, Question, User
+from .serializers import AssessmentSerializer, UserSerializer
 
 class AssessmentList(APIView):
 
@@ -22,3 +22,21 @@ class AssessmentDetail(APIView):
         serializer = AssessmentSerializer(assessment)
         return Response(serializer.data)
 
+class ResultList(APIView):
+
+    def get(self, request, assessment_id):
+        questions = Question.objects.filter(assessment_id=assessment_id)
+        choices = Choice.objects.filter(question_id__in=questions.values('id'))
+        users_who_took_the_assessment = User.objects.filter(answers__in=choices.values('id')).distinct()
+        serializer = UserSerializer(users_who_took_the_assessment, many=True)
+        return Response(serializer.data)
+
+class UserResult(APIView):
+    def get(self, request, assessment_id, user_id):
+        questions = Question.objects.filter(assessment_id=assessment_id)
+        choices = Choice.objects.filter(question_id__in=questions.values('id'))
+        users_who_took_the_assessment = User.objects.get(answers__in=choices.values('id'), id=user_id)
+        serializer = UserSerializer(users_who_took_the_assessment)
+        return Response(serializer.data)
+
+    
