@@ -5,8 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # App code
-from .models import Assessment, Choice, Question, User
-from .serializers import AssessmentSerializer, UserSerializer
+from .models import Project, Assessment, Choice, Question, User
+from .serializers import AssessmentSerializer, ProjectSerializer, UserSerializer
+
+class ProjectDetail(APIView):
+
+    def get(self, request, project_id):
+        project = get_object_or_404(Project.objects.filter(id=project_id))
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data)
 
 class AssessmentList(APIView):
 
@@ -14,7 +21,7 @@ class AssessmentList(APIView):
         assessment = get_object_or_404(Assessment.objects.all())
         serializer = AssessmentSerializer(assessment, many=True)
         return Response(serializer)
-
+    
 class AssessmentDetail(APIView):
 
     def get(self, request, assessment_id):

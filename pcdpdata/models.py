@@ -8,7 +8,7 @@ class Project(models.Model):
 
 class Assessment(models.Model):
     title = models.CharField(max_length=64)
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True, related_name='assesment')
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True, related_name='assesment_list')
     original_id = models.IntegerField()
     type = models.IntegerField()
 
